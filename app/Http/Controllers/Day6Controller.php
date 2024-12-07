@@ -18,8 +18,7 @@ class Day6Controller extends Controller
         $this->data();
 
         return collect($this->parsePath($this->map))
-            ->pluck('position')
-            ->unique()
+            ->unique(fn (string $node) => explode('-', $node)[0] . '-' . explode('-', $node)[1])
             ->count();
     }
 
@@ -46,8 +45,6 @@ class Day6Controller extends Controller
 
     private function parsePath(iterable $map, array $path = []): bool|array
     {
-        $map = Collection::wrap($map);
-
         $this->start = $this->find('^');
         $this->direction = 'u';
         $this->position = $this->start;
