@@ -21,7 +21,6 @@ class Day10Controller extends Controller
 
     public function two(): int
     {
-
         return $this->data()->count();
     }
 
