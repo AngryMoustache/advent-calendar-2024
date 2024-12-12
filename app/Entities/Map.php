@@ -27,14 +27,15 @@ class Map
         })->flatten(1);
     }
 
-    public function getPlus(int $x, int $y): Collection
+    public function getPlus(int $x, int $y, bool $withKeys = false): Collection
     {
-        return $this->get(
-            [$x, $y - 1],
-            [$x + 1, $y],
-            [$x, $y + 1],
-            [$x - 1, $y],
-        );
+        return$this->get([$x, $y - 1], [$x + 1, $y], [$x, $y + 1], [$x - 1, $y])
+            ->when($withKeys, fn (Collection $c) => collect([
+                $x . '-' . ($y - 1),
+                ($x + 1) . '-' . $y,
+                $x . '-' . ($y + 1),
+                ($x - 1) . '-' . $y,
+            ])->combine($c));
     }
 
     public function get(...$coords): Collection
